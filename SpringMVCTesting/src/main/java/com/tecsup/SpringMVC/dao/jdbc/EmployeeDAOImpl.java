@@ -45,6 +45,26 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 	}
 
+	@Override
+	public Employee findEmployee(String lastname) throws DAOException, EmptyResultException {
+
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE upper(last_name) like upper(?)";
+
+		Object[] params = new Object[] { lastname };
+
+		try {
+
+			Employee emp = (Employee) jdbcTemplate.queryForObject(query, params, new EmployeeMapper());
+			//
+			return emp;
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new EmptyResultException();
+		} catch (Exception e) {
+			logger.info("Error: " + e.getMessage());
+			throw new DAOException(e.getMessage());
+		}
+	}
 
 	@Override
 	public void create(String login, String password, String lastname, String firstname, int salary, int dptId) throws DAOException {
@@ -163,4 +183,35 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			throw new DAOException(e.getMessage());
 		}
 	}
+	
+	@Override
+	public List<Employee> findEmployeesByLastName(String lastname) throws DAOException, EmptyResultException {
+
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE upper(last_name) like upper(?) ";
+
+		Object[] params = new Object[] { "%" + lastname};
+
+		try {
+
+			List<Employee> employees = jdbcTemplate.query(query, params, new EmployeeMapper());
+			//
+			return employees;
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new EmptyResultException();
+		} catch (Exception e) {
+			logger.info("Error: " + e.getMessage());
+			throw new DAOException(e.getMessage());
+		}
+	}
 }
+
+
+
+
+
+
+
+
+
+

@@ -9,6 +9,8 @@ import com.tecsup.SpringMVC.model.Employee;
 public interface EmployeeDAO {
 
 	Employee findEmployee(int id) throws DAOException, EmptyResultException;
+	
+	Employee findEmployee(String lastname) throws DAOException, EmptyResultException;
 
 	void create(String login, String password, String lastname, String firstname, int salary, int dptId) throws DAOException;
 
@@ -21,6 +23,9 @@ public interface EmployeeDAO {
 	List<Employee> findAllEmployees() throws DAOException, EmptyResultException;
 
 	List<Employee> findEmployeesByName(String name) throws DAOException, EmptyResultException;
+	
+	List<Employee> findEmployeesByLastName(String lastname) throws DAOException, EmptyResultException;
+
 
 }
 
