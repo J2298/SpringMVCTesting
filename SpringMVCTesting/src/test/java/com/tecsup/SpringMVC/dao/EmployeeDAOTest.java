@@ -68,24 +68,24 @@ public class EmployeeDAOTest {
 	*/
 	
 	
-	@Test
-	public void testFindEmployeeBylastname() {
-
-		try {
-			//
-			List<Employee> emp = employeeDAO.findEmployeesByLastName("Gomez");
-			
-			Assert.assertNotNull(emp);		
-	
-			logger.info(emp.toString());
-
-		} catch (EmptyResultException e) {
-			fail(e.getMessage());
-		} catch (DAOException e) {
-			fail(e.getMessage());
-		}
-
-	}
+//	@Test
+//	public void testFindEmployeeBylastname() {
+//
+//		try {
+//			//
+//			List<Employee> emp = employeeDAO.findEmployeesByLastName("Gomez");
+//			
+//			Assert.assertNotNull(emp);		
+//	
+//			logger.info(emp.toString());
+//
+//		} catch (EmptyResultException e) {
+//			fail(e.getMessage());
+//		} catch (DAOException e) {
+//			fail(e.getMessage());
+//		}
+//
+//	}
 	
 	
 	

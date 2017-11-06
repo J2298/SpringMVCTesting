@@ -12,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import com.tecsup.SpringMVC.dao.EmployeeDAO;
 import com.tecsup.SpringMVC.exception.DAOException;
 import com.tecsup.SpringMVC.exception.EmptyResultException;
+import com.tecsup.SpringMVC.exception.LoginException;
 import com.tecsup.SpringMVC.mapper.EmployeeMapper;
 import com.tecsup.SpringMVC.model.Employee;
 
@@ -27,7 +28,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public Employee findEmployee(int employee_id) throws DAOException, EmptyResultException {
 
-		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE employee_id = ?";
+		String query = "S2?";
 
 		Object[] params = new Object[] { employee_id };
 
@@ -36,6 +37,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			Employee emp = (Employee) jdbcTemplate.queryForObject(query, params, new EmployeeMapper());
 			//
 			return emp;
+			//return null;
 
 		} catch (EmptyResultDataAccessException e) {
 			throw new EmptyResultException();
@@ -45,26 +47,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 	}
 
-	@Override
-	public Employee findEmployee(String lastname) throws DAOException, EmptyResultException {
-
-		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE upper(last_name) like upper(?)";
-
-		Object[] params = new Object[] { lastname };
-
-		try {
-
-			Employee emp = (Employee) jdbcTemplate.queryForObject(query, params, new EmployeeMapper());
-			//
-			return emp;
-
-		} catch (EmptyResultDataAccessException e) {
-			throw new EmptyResultException();
-		} catch (Exception e) {
-			logger.info("Error: " + e.getMessage());
-			throw new DAOException(e.getMessage());
-		}
-	}
 
 	@Override
 	public void create(String login, String password, String lastname, String firstname, int salary, int dptId) throws DAOException {
@@ -126,7 +108,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public Employee findEmployeeByLogin(String login) throws DAOException, EmptyResultException {
 
-		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE login = ? ";
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id "
+				+ " FROM employees WHERE login = ? ";
 
 		Object[] params = new Object[] { login };
 
@@ -166,7 +149,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public List<Employee> findEmployeesByName(String name) throws DAOException, EmptyResultException {
 
-		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE upper(first_name) like upper(?) ";
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id "
+				+ " FROM employees WHERE upper(first_name) like upper(?) ";
 
 		Object[] params = new Object[] { "%" + name + "%" };
 
@@ -183,27 +167,36 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			throw new DAOException(e.getMessage());
 		}
 	}
+
+
+	public Employee validate(String login, String pwd) throws LoginException, DAOException {
 	
-	@Override
-	public List<Employee> findEmployeesByLastName(String lastname) throws DAOException, EmptyResultException {
-
-		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE upper(last_name) like upper(?) ";
-
-		Object[] params = new Object[] { "%" + lastname};
-
+		logger.info("validate(): login: " + login + ", clave: " + pwd);
+	
+		if ("".equals(login) && "".equals(pwd)) {
+			throw new LoginException("Login and password incorrect");
+		}
+	
+		String query = "SELECT login, password, employee_id, first_name, last_name, salary, department_id  "
+				+ " FROM employees WHERE login=? AND password=?";
+	
+		Object[] params = new Object[] { login, pwd };
+	
 		try {
-
-			List<Employee> employees = jdbcTemplate.query(query, params, new EmployeeMapper());
+	
+			Employee emp = (Employee) jdbcTemplate.queryForObject(query, params, new EmployeeMapper());
 			//
-			return employees;
-
+			return emp;
+	
 		} catch (EmptyResultDataAccessException e) {
-			throw new EmptyResultException();
+			logger.info("Employee y/o clave incorrecto");
+			throw new LoginException();
 		} catch (Exception e) {
 			logger.info("Error: " + e.getMessage());
 			throw new DAOException(e.getMessage());
 		}
 	}
+
 }
 
 

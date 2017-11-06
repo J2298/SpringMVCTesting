@@ -6,12 +6,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tecsup.SpringMVC.model.Employee;
 import com.tecsup.SpringMVC.services.EmployeeService;
-
+   
 /**
  * Handles requests for the application home page.
  */
@@ -22,6 +23,29 @@ public class EmployeeController {
 	
 	@Autowired
 	private EmployeeService employeeService;
+	
+	
+	@GetMapping("/admin/menu")
+	public String menu() {
+
+		return "/admin/menu";
+	}
+	
+	
+	@GetMapping("/admin/emp/list")
+	public String list(@ModelAttribute("SpringWeb") Employee employee, ModelMap model) {
+
+		try {
+			model.addAttribute("employees", employeeService.findAll());
+		} catch (Exception e) {
+			logger.info(e.getMessage());
+			model.addAttribute("message", e.getMessage());
+		}
+
+		return "admin/emp/list";
+	}
+	
+	
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
