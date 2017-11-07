@@ -43,5 +43,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 		return emps;
 	}
+	
+	@Override
+	public void update(String login, String password, String lastname, String firstname, long salary, int dptId)
+			throws DAOException {
+	
+		employeeDAO.update(login, password, lastname, firstname, salary, dptId);
+	}
+
 
 }

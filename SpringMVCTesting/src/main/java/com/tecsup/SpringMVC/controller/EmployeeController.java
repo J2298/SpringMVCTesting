@@ -1,13 +1,19 @@
 package com.tecsup.SpringMVC.controller;
 
+import javax.servlet.ServletContext;
+
+import org.junit.Assert;
+import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mock.web.MockServletContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.tecsup.SpringMVC.model.Employee;
@@ -50,22 +56,47 @@ public class EmployeeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-	@GetMapping("/{employee_id}")
-	public ModelAndView home(@PathVariable int employee_id, ModelMap model) {
+	@GetMapping("/admin/emp/{action}/{employee_id}")
+	public ModelAndView form(@PathVariable String action, @PathVariable int employee_id, ModelMap model) {
 
+		// action = {"editform","deleteform"}
+		logger.info("action = " + action);
 		ModelAndView modelAndView = null;
-		Employee emp = new Employee();
+
 		try {
-			emp = employeeService.find(employee_id);
+			Employee emp = employeeService.find(employee_id);
 			logger.info(emp.toString());
+			modelAndView = new ModelAndView("admin/emp/" + action, "command", emp);
 		} catch (Exception e) {
-			e.printStackTrace();
+			model.addAttribute("message", e.getMessage());
+			modelAndView = new ModelAndView("admin/emp/" + action, "command", new Employee());
 		}
-		
-		modelAndView = new ModelAndView("home", "command", emp);
 
 		return modelAndView;
 	}
+
+	@PostMapping("/admin/emp/editsave")
+	public ModelAndView editsave(@ModelAttribute("SpringWeb") Employee emp, ModelMap model) {
+
+		
+		logger.info("emp = " + emp);
+		
+		ModelAndView modelAndView = null;
+
+		try {
+			employeeService.update(emp.getLogin(), emp.getPassword(), emp.getFirstname(), emp.getLastname(),
+					emp.getSalary(), -1);
+
+			modelAndView = new ModelAndView("redirect:/admin/emp/list");
+		} catch (Exception e) {
+			model.addAttribute("message", e.getMessage());
+			modelAndView = new ModelAndView("redirect:/admin/emp/list");
+		}
+
+		return modelAndView;
+	}
+
+
 	
 }
 
