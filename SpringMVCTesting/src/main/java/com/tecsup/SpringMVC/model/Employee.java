@@ -1,13 +1,36 @@
 package com.tecsup.SpringMVC.model;
 
+
 public class Employee {
 
 	String login;
 	String password;
-	String employeeId;
+	int employeeId;
 	String firstname;
 	String lastname;
-	long salary;
+	int salary;
+//	int departmentId;
+	
+	/**
+	 * 
+	 * @param login
+	 * @param password
+	 * @param firstname
+	 * @param lastname
+	 * @param salary
+	 */
+	public Employee(String login, String password, String firstname, String lastname, int salary) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.salary = salary;
+	}
+
+	public Employee() {
+		super();
+	}
 
 	public String getLogin() {
 		return login;
@@ -25,11 +48,11 @@ public class Employee {
 		this.password = password;
 	}
 
-	public String getEmployeeId() {
+	public int getEmployeeId() {
 		return employeeId;
 	}
 
-	public void setEmployeeId(String employeeID) {
+	public void setEmployeeId(int employeeID) {
 		this.employeeId = employeeID;
 	}
 
@@ -49,19 +72,26 @@ public class Employee {
 		this.lastname = lastname;
 	}
 
-	public long getSalary() {
+	public int getSalary() {
 		return salary;
 	}
 
-	public void setSalary(long salary) {
+	public void setSalary(int salary) {
 		this.salary = salary;
 	}
-
+	
+//	public int getDepartmentId() {
+//		return departmentId;
+//	}
+//
+//	public void setDepartmentId(int departmentID) {
+//		this.departmentId = departmentID;
+//	}
+//	, departmentId=" + departmentId + "
 	@Override
 	public String toString() {
 		return "Employee [login=" + login + ", password=" + password + ", employeeId=" + employeeId + ", firstname="
 				+ firstname + ", lastname=" + lastname + ", salary=" + salary + "]";
 	}
-	
-	
+
 }

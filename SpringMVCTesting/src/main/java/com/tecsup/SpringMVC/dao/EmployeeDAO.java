@@ -15,7 +15,7 @@ public interface EmployeeDAO {
 
 	void delete(String login) throws DAOException;
 
-	void update(String login, String password, String lastname, String firstname, long salary, int dptId) throws DAOException;
+	void update(String login, String password, String lastname, String firstname, int salary, int dptId) throws DAOException;
 
 	Employee findEmployeeByLogin(String login) throws DAOException, EmptyResultException;
 
@@ -26,5 +26,6 @@ public interface EmployeeDAO {
 	Employee validate(String idEmployee, String clave) throws LoginException, DAOException;
 
 }
+
 
 

@@ -28,7 +28,8 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public Employee findEmployee(int employee_id) throws DAOException, EmptyResultException {
 
-		String query = "Select * from employees where employee_id=?";
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id "
+				+ " FROM employees WHERE employee_id = ?";
 
 		Object[] params = new Object[] { employee_id };
 
@@ -55,19 +56,14 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 		Object[] params = new Object[] { login, password, lastname, firstname, salary, dptId };
 
-		Employee emp = null;
+		//Employee emp = null;
 		
 		try {
 			// create
 			jdbcTemplate.update(query, params);
-			// search
-			emp = this.findEmployeeByLogin(login);
 
-		} catch (EmptyResultException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 		} catch (Exception e) {
-			logger.info("Error: " + e.getMessage());
+			logger.error("Error: " + e.getMessage());
 			throw new DAOException(e.getMessage());
 		}
 		
@@ -90,8 +86,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 	@Override
-	public void update(String  login, String password, String lastname, String firstname, long salary, int dptId) throws DAOException {
-
+	public void update(String  login, String password, String lastname, String firstname, int salary, int dptId) throws DAOException {
 
 		String query = "UPDATE employees SET password = ?, first_name =?, last_name = ?, salary = ? WHERE login = ?";
 
@@ -105,7 +100,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 			throw new DAOException(e.getMessage());
 		}
 	}
-
 
 
 	@Override
@@ -152,8 +146,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	@Override
 	public List<Employee> findEmployeesByName(String name) throws DAOException, EmptyResultException {
 
-		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id "
-				+ " FROM employees WHERE upper(first_name) like upper(?) ";
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id FROM employees WHERE upper(first_name) like upper(?) ";
 
 		Object[] params = new Object[] { "%" + name + "%" };
 
@@ -201,13 +194,3 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 	}
 
 }
-
-
-
-
-
-
-
-
-
-

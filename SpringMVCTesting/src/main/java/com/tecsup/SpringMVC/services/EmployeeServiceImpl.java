@@ -19,11 +19,6 @@ import com.tecsup.SpringMVC.model.Employee;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(EmployeeDAOImpl.class);
-
-	@Autowired
-	private JdbcTemplate jdbcTemplate;
 
 	@Autowired
 	private EmployeeDAO employeeDAO;
@@ -37,19 +32,37 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<Employee> findAll() throws DAOException, EmptyResultException {
-
-		List<Employee> emps = employeeDAO.findAllEmployees();
+	public List<Employee> findAll()
+			throws DAOException, EmptyResultException {
 		
+		List<Employee> emps = employeeDAO.findAllEmployees();
+	
 		return emps;
 	}
-	
+
 	@Override
-	public void update(String login, String password, String lastname, String firstname, long salary, int dptId)
+	public void update(String login, String password, String lastname, String firstname, int salary, int dptId)
 			throws DAOException {
 	
 		employeeDAO.update(login, password, lastname, firstname, salary, dptId);
 	}
 
+	@Override
+	public void delete(String login) throws DAOException {
+		 
+		employeeDAO.delete(login);
+	
+	}
+
+	@Override
+	public void create(String login, String password, String lastname, String firstname, int salary, int dptId)
+			throws DAOException {
+	
+		employeeDAO.create(login, password, lastname, firstname, salary, dptId);
+
+	}
+	
+	
 
 }
+
