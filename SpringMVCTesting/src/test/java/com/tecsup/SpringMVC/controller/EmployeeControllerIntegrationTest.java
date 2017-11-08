@@ -59,7 +59,8 @@ public class EmployeeControllerIntegrationTest {
 										hasProperty("password", is("123456")),
 										hasProperty("firstname", is("Job")),
 										hasProperty("lastname", is("Cantaro")), 
-										hasProperty("salary", is(2500)) //,
+										hasProperty("salary", is(2500)),
+										hasProperty("departmentId", is(10))//,
 										//hasProperty("department",hasProperty("departmentId", is(12)))
 									))))
 				.andExpect(model().attribute("employees",
@@ -69,7 +70,8 @@ public class EmployeeControllerIntegrationTest {
 										hasProperty("password", is("654321")),
 										hasProperty("firstname", is("Jocs")),
 										hasProperty("lastname", is("Vetanzo")), 
-										hasProperty("salary", is(6500)) //,
+										hasProperty("salary", is(6500)),
+										hasProperty("departmentId", is(20))//,
 										//hasProperty("department",hasProperty("departmentId", is(12)))
 									))));
 	}

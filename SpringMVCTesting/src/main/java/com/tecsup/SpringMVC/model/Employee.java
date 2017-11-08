@@ -9,7 +9,7 @@ public class Employee {
 	String firstname;
 	String lastname;
 	int salary;
-
+	int departmentId;
 	
 	/**
 	 * 
@@ -79,11 +79,19 @@ public class Employee {
 	public void setSalary(int salary) {
 		this.salary = salary;
 	}
+	
+	public int getDepartmentId() {
+		return departmentId;
+	}
+
+	public void setDepartmentId(int departmentID) {
+		this.departmentId = departmentID;
+	}
 
 	@Override
 	public String toString() {
 		return "Employee [login=" + login + ", password=" + password + ", employeeId=" + employeeId + ", firstname="
-				+ firstname + ", lastname=" + lastname + ", salary=" + salary + "]";
+				+ firstname + ", lastname=" + lastname + ", salary=" + salary + ", departmentId=" + departmentId + "]";
 	}
 
 }

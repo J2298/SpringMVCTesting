@@ -42,13 +42,8 @@
 								<td>${emp.firstname}</td>
 								<td>${emp.lastname}</td>
 								<td>${emp.salary}</td>
-								<td>								
-									<c:forEach var="entry" items="${departmentList}">        
-									      <c:if test="${entry.key == emp.department.departmentId}">
-									           ${entry.value}
-									      </c:if>
-									</c:forEach>
-								</td>
+								<td>${emp.departmentId}</td>
+								
 								<td><a
 									href="<%=request.getContextPath()%>/admin/emp/editform/${emp.employeeId}"
 									class="btn btn-info btn-xs"> <i

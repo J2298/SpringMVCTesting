@@ -203,7 +203,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 
 	@Override
 	public List<Employee> findPractica(String nombre, String apellido, int salario) throws DAOException, EmptyResultException {
-		String query = "SELECT employee_id, login, password, first_name, last_name, salary"
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary, department_id"
 				+ " FROM employees WHERE upper(first_name) like upper(?) AND upper(last_name) like upper(?) AND salary like (?)";
 
 		Object[] params = new Object[] { "%" + nombre, "%" + apellido, salario};
