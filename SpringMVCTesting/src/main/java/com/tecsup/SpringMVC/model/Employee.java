@@ -1,6 +1,5 @@
 package com.tecsup.SpringMVC.model;
 
-
 public class Employee {
 
 	String login;

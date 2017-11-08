@@ -1,13 +1,8 @@
 package com.tecsup.SpringMVC.controller;
 
-import javax.servlet.ServletContext;
-
-import org.junit.Assert;
-import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mock.web.MockServletContext;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,7 +14,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.tecsup.SpringMVC.exception.DAOException;
 import com.tecsup.SpringMVC.model.Employee;
 import com.tecsup.SpringMVC.services.EmployeeService;
-   
+
+
 /**
  * Handles requests for the application home page.
  */

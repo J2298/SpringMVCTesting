@@ -6,11 +6,14 @@ public class EmptyResultException extends Exception {
 		// TODO Auto-generated constructor stub
 		super(string);
 	}
+	
+	
 
 	public EmptyResultException() {
 		// TODO Auto-generated constructor stub
 	}
 
+	
 	/**
 	 * 
 	 */
