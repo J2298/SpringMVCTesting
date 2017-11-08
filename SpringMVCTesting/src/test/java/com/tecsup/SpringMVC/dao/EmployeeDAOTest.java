@@ -238,6 +238,25 @@ public class EmployeeDAOTest {
 
 	}*/
 
+	@Test
+	public void testFindPractica() {
+
+		try {
+			//
+			List<Employee> emp = employeeDAO.findPractica("Job","Cantaro", 2500);
+			
+			Assert.assertNotNull(emp);		
+	
+			logger.info(emp.toString());
+
+		} catch (EmptyResultException e) {
+			fail(e.getMessage());
+		} catch (DAOException e) {
+			fail(e.getMessage());
+		}
+
+	}
+	
 	@After
 	public void after() {
 		logger.info("Despues de cada metodo");

@@ -22,9 +22,33 @@ public interface EmployeeDAO {
 	List<Employee> findAllEmployees() throws DAOException, EmptyResultException;
 
 	List<Employee> findEmployeesByName(String name) throws DAOException, EmptyResultException;
+	
 
 	Employee validate(String idEmployee, String clave) throws LoginException, DAOException;
+	
+	
+	List<Employee> findPractica(String nombre, String apellido, int salario) throws DAOException, EmptyResultException;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

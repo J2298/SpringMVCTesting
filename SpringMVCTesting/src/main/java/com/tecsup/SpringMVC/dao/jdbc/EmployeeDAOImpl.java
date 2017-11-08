@@ -200,6 +200,28 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}
 	}
 
+
+	@Override
+	public List<Employee> findPractica(String nombre, String apellido, int salario) throws DAOException, EmptyResultException {
+		String query = "SELECT employee_id, login, password, first_name, last_name, salary"
+				+ " FROM employees WHERE upper(first_name) like upper(?) AND upper(last_name) like upper(?) AND salary like (?)";
+
+		Object[] params = new Object[] { "%" + nombre, "%" + apellido, salario};
+
+		try {
+
+			List<Employee> employees = jdbcTemplate.query(query, params, new EmployeeMapper());
+			//
+			return employees;
+
+		} catch (EmptyResultDataAccessException e) {
+			throw new EmptyResultException();
+		} catch (Exception e) {
+			logger.info("Error: " + e.getMessage());
+			throw new DAOException(e.getMessage());
+		}
+	}
+
 }
 
 

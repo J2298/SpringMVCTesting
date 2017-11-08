@@ -34,6 +34,7 @@ public class EmployeeControllerIntegrationTest {
 	public void setup() throws Exception {
 	    this.mockMvc = MockMvcBuilders.webAppContextSetup(this.wac).build();
 	}
+	
 	@Test
 	public void givenWac_whenServletContext_thenItProvidesGreetController() {
 	    ServletContext servletContext = wac.getServletContext();
@@ -43,41 +44,52 @@ public class EmployeeControllerIntegrationTest {
 	    Assert.assertNotNull(wac.getBean("employeeController"));
 	}
 	
+	
 	@Test
 	public void list() throws Exception {
 		mockMvc.perform(get("/admin/emp/list"))
 				.andExpect(status().isOk())
 				.andExpect(view().name("admin/emp/list"))
 				.andExpect(forwardedUrl("/WEB-INF/views/admin/emp/list.jsp"))
-				.andExpect(model().attribute("employees", hasSize(182)))
+				.andExpect(model().attribute("employees", hasSize(2)))
 				.andExpect(model().attribute("employees",
 						hasItem(allOf(  
-										hasProperty("employeeId", is(100)),
-										hasProperty("login", is("jgomez")),
+										hasProperty("employeeId", is(10)),
+										hasProperty("login", is("job123")),
 										hasProperty("password", is("123456")),
-										hasProperty("firstname", is("Jaime")),
-										hasProperty("lastname", is("Gomez")), 
-										hasProperty("salary", is(2505)) //,
+										hasProperty("firstname", is("Job")),
+										hasProperty("lastname", is("Cantaro")), 
+										hasProperty("salary", is(2500)) //,
+										//hasProperty("department",hasProperty("departmentId", is(12)))
+									))))
+				.andExpect(model().attribute("employees",
+						hasItem(allOf(  
+										hasProperty("employeeId", is(20)),
+										hasProperty("login", is("jocs")),
+										hasProperty("password", is("654321")),
+										hasProperty("firstname", is("Jocs")),
+										hasProperty("lastname", is("Vetanzo")), 
+										hasProperty("salary", is(6500)) //,
 										//hasProperty("department",hasProperty("departmentId", is(12)))
 									))));
 	}
-	
-	@Test
-    public void editForm() throws Exception {
-		
-        mockMvc.perform(get("/admin/emp/editform/100"))
-                .andExpect(status().isOk())
-                .andExpect(view().name("admin/emp/editform"))
-                .andExpect(forwardedUrl("/WEB-INF/views/admin/emp/editform.jsp"))
-                .andExpect(model().attribute("command", hasProperty("employeeId", is(100))))
-                .andExpect(model().attribute("command", hasProperty("login", is("jgomez"))))
-                .andExpect(model().attribute("command", hasProperty("password", is("123456"))))
-                .andExpect(model().attribute("command", hasProperty("firstname", is("Jaime"))))
-                .andExpect(model().attribute("command", hasProperty("lastname", is("Gomez"))))
-                .andExpect(model().attribute("command", hasProperty("salary", is(2505))))
-                //.andExpect(model().attribute("command", 
-                //		hasProperty("department", hasProperty("departmentId",is(12)))))
-            ;
-	}
+//	
+//	@Test
+//    public void editForm() throws Exception {
+//		
+//        mockMvc.perform(get("/admin/emp/editform/100"))
+//                .andExpect(status().isOk())
+//                .andExpect(view().name("admin/emp/editform"))
+//                .andExpect(forwardedUrl("/WEB-INF/views/admin/emp/editform.jsp"))
+//                .andExpect(model().attribute("command", hasProperty("employeeId", is(100))))
+//                .andExpect(model().attribute("command", hasProperty("login", is("jgomez"))))
+//                .andExpect(model().attribute("command", hasProperty("password", is("123456"))))
+//                .andExpect(model().attribute("command", hasProperty("firstname", is("Jaime"))))
+//                .andExpect(model().attribute("command", hasProperty("lastname", is("Gomez"))))
+//                .andExpect(model().attribute("command", hasProperty("salary", is(2505))))
+//                //.andExpect(model().attribute("command", 
+//                //		hasProperty("department", hasProperty("departmentId",is(12)))))
+//            ;
+//	}
 
 }
